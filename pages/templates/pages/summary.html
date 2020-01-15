@@ -1,0 +1,66 @@
+﻿{% extends 'pages/layout.html' %}
+{% block content %}
+
+  <!--Main layout-->
+  <main>
+    <div class="container">
+
+    <div class="table-responsive text-nowrap">
+    <h2>Order summary</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <td scope='col'>#</td>
+            <th scope="col">Item title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Count</th>
+            <th scope="col">Total item price</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for cart_item in cart_items  %}
+          <tr>
+            <td scope='row'>{{ forloop.counter }}</td>
+            <td>{{ cart_item.product.title}} </td>
+            <td>{{ cart_item.product.price}}  $</td>
+            <td>
+              <a href="{% url 'cart_item_single_minus' cart_item.product.slug %}"><i class="fas fa-minus ml-2"></i></a>
+              {{ cart_item.count }}
+              <a href="{% url 'cart_item_single_plus' cart_item.product.slug %}"><i class="fas fa-plus ml-2"></i></a>
+            </td>
+            <td>
+              {% if cart_item.product.discount_price %}            
+                {{ cart_item.get_total_item_discount_price }} $              
+                <span class="badge badge-primary">Saving {{ cart_item.get_money_saved }} $</span>
+              {% else %}
+                {{ cart_item.get_total_item_price }} $
+              {% endif %}
+              <a href="{% url 'remove_from_cart' cart_item.product.slug %}"><i class="fas fa-trash float-right"></i></a>
+            </td>
+          </tr>
+          {% empty %}
+            <tr>
+              <td colspan='5'>Cart is empty              
+              </td>
+            </tr>
+        {% endfor %}
+          <tr>
+            <td colspan='4'>Order total:</td>
+            <td>{{ total_price }} $</td>
+          </tr>
+          <tr>
+            <td colspan='5'>
+            <a class='btn btn-warning float-right ml-3' href='{% url 'checkout' %}' >Check out</a>
+            <a class='btn btn-primary float-right' href='/' >Continue shoping</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+{% endblock %}

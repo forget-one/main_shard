@@ -1,0 +1,68 @@
+﻿{% extends 'pages/layout.html' %}
+
+{% block content %}
+    <!--Main layout-->
+    <main>
+        <div class="container dark-grey-text mt-5">
+
+            <!--Grid row-->
+            <div class="row wow fadeIn">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+
+                    <img src="{{ product.image.url }}" class="img-fluid" alt="">
+
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+
+                    <!--Content-->
+                    <div class="p-4">
+
+                        <div class="mb-3">
+                        {% for hashtag in product.hashtag.all %}
+                                <span class="badge purple mr-1"> {{ hashtag.title }} </span>
+                        {% endfor %}
+                        </div>
+
+                        <p class="lead">
+                        {% if product.discount_price %}
+                            <span class="mr-1">
+                                <del>{{ product.price }}$</del>
+                            </span>
+                            <span>{{ product.discount_price }}$</span>
+                        {% else %}
+                            <span>{{ product.price }}$</span>
+                        {% endif %}
+                        </p>
+
+                        <p class="lead font-weight-bold">Description</p>
+
+                        <p>
+                            {{ product.description }}
+                        </p>
+
+                        <form method='post' action='{% url 'add_cart' slug=product.slug %}' class="d-flex justify-content-left">
+                            {% csrf_token %}
+                            <input name='count' type="number" class="form-control mt-2" type="text" style="width: 100px">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form> 
+
+                    </div>
+                    <!--Content-->
+
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+            <hr>
+
+
+        </div>
+    </main>
+    <!--Main layout-->
+{% endblock %}
