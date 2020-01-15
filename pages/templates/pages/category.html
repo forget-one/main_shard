@@ -21,7 +21,7 @@
 
               <!--Card image-->
               <div class="view overlay">
-                <img href='{{ item.get_absolute_url }}' src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
+                <img href='{% if item.image %} {{ item.image.url }} {% else %} https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg {% endif %}' src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
                   alt="">
                 <a>
                   <div class="mask rgba-white-slight"></div>
